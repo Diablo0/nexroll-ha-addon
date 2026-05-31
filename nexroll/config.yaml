@@ -1,0 +1,46 @@
+---
+name: "NeXroll"
+description: "Preroll manager for Plex and Jellyfin — schedule, sequence, and automate your media server pre-rolls."
+version: "1.11.12"
+slug: "nexroll"
+init: false
+startup: application
+arch:
+  - amd64
+  - aarch64
+
+url: "https://github.com/JFLXCLOUD/NeXroll"
+
+ports:
+  9393/tcp: 9393
+ports_description:
+  9393/tcp: "NeXroll Web UI"
+
+# /share is accessible to all addons and mapped to /share inside the container.
+# Users point their prerolls path to a subfolder under /share.
+map:
+  - share:rw
+
+options:
+  plex_url: ""
+  plex_token: ""
+  jellyfin_url: ""
+  jellyfin_api_key: ""
+  radarr_url: ""
+  radarr_api_key: ""
+  sonarr_url: ""
+  sonarr_api_key: ""
+  prerolls_path: "/share/nexroll/prerolls"
+  log_level: "info"
+
+schema:
+  plex_url: str
+  plex_token: str
+  jellyfin_url: str
+  jellyfin_api_key: str
+  radarr_url: str
+  radarr_api_key: str
+  sonarr_url: str
+  sonarr_api_key: str
+  prerolls_path: str
+  log_level: "list(trace|debug|info|warning|error|fatal)"
