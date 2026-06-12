@@ -1,4 +1,5 @@
 name: Build and publish addon image
+
 on:
   push:
     paths:
