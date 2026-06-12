@@ -1,0 +1,37 @@
+name: Sync upstream NeXroll version
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  sync-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get latest upstream release
+        id: upstream
+        run: |
+          VERSION=$(curl -s https://api.github.com/repos/JFLXCLOUD/NeXroll/releases/latest \
+            | jq -r '.tag_name' | sed 's/^v//')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Get current addon version
+        id: current
+        run: |
+          CURRENT=$(grep '^version:' nexroll/config.yaml | awk '{print $2}' | tr -d '"')
+          echo "version=$CURRENT" >> "$GITHUB_OUTPUT"
+
+      - name: Update config.yaml and Dockerfile if version changed
+        if: steps.upstream.outputs.version != steps.current.outputs.version
+        run: |
+          NEW="${{ steps.upstream.outputs.version }}"
+          sed -i "s/^version:.*/version: \"${NEW}\"/" nexroll/config.yaml
+          sed -i "s|FROM jbrns/nexroll:.*|FROM jbrns/nexroll:${NEW}|" nexroll/Dockerfile
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add nexroll/config.yaml nexroll/Dockerfile
+          git commit -m "chore: bump NeXroll to v${NEW}"
+          git push
