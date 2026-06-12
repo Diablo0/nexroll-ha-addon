@@ -8,7 +8,7 @@ startup: application
 arch:
   - amd64
   - aarch64
-image: "ghcr.io/Diablo0/nexroll-ha-addon/{arch}:{version}"
+image: "ghcr.io/diablo0/nexroll-ha-addon/{arch}:{version}"
 
 url: "https://github.com/JFLXCLOUD/NeXroll"
 
