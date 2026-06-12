@@ -4,7 +4,7 @@
 # Upstream image: https://hub.docker.com/r/jbrns/nexroll
 # Upstream source: https://github.com/JFLXCLOUD/NeXroll
 
-FROM jbrns/nexroll:1.11.12
+FROM jbrns/nexroll:1.14.0
 
 # jq is needed to parse /data/options.json (HA's options file)
 RUN apt-get update \
