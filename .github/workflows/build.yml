@@ -47,5 +47,5 @@ jobs:
           platforms: ${{ matrix.arch == 'aarch64' && 'linux/arm64' || 'linux/amd64' }}
           push: true
           tags: |
-            ghcr.io/diablo0/nexroll-ha-addon/${{ matrix.arch }}:${{ steps.ver.outputs.version }}
-            ghcr.io/diablo0/nexroll-ha-addon/${{ matrix.arch }}:latest
+            ghcr.io/diablo0/nexroll-ha-addon-${{ matrix.arch }}:${{ steps.ver.outputs.version }}
+            ghcr.io/diablo0/nexroll-ha-addon-${{ matrix.arch }}:latest
